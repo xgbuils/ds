@@ -27,16 +27,22 @@ const BaseFlex = styled(Box)(
   })
 );
 
-const horizontalProps = ["pr", "px", "p"];
-const verticalProps = ["pb", "py", "p"];
+const horizontalProps = [
+  "pr",
+  "paddingRight",
+  "px",
+  "paddingX",
+  "p",
+  "padding"
+];
+const verticalProps = ["pb", "paddingBottom", "py", "paddingY", "p", "padding"];
 
 const getPadding = (props, coord) => {
-  const pProps = coord === "Right" ? horizontalProps : verticalProps;
+  const paddingProps = coord === "Right" ? horizontalProps : verticalProps;
 
-  const pProp = pProps.find(pProp => {
-    return props[pProp] != null;
-  });
-  return props[pProp];
+  const paddingProp = paddingProps.find(prop => props[prop] != null);
+
+  return props[paddingProp];
 };
 
 const toArray = value => (Array.isArray(value) ? value : [value]);

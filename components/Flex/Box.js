@@ -10,8 +10,8 @@ const transform = (value, scale, props) => {
   if (typeof value === "object") {
     const { axisGap, padding } = value;
     const themeAxisGap = getThemeSpace(axisGap, props);
-    const themeP = getThemeSpace(padding, props);
-    return padding ? `calc(${themeAxisGap} + ${themeP})` : themeAxisGap;
+    const themePadding = getThemeSpace(padding, props);
+    return padding ? `calc(${themeAxisGap} + ${themePadding})` : themeAxisGap;
   }
   return getThemeSpace(value, props);
 };
