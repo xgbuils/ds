@@ -5,14 +5,9 @@ import Provider from "../components/Provider";
 
 function loadStories() {
   require("../stories/index.js");
-  // You can require as many stories as you need.
 }
 
-addDecorator(story => (
-  <Provider currency="EUR" lang="en">
-    {story()}
-  </Provider>
-));
+addDecorator(story => <Provider>{story()}</Provider>);
 
 addParameters({ options: { theme } });
 
