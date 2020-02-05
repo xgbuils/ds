@@ -5,3 +5,4 @@ require("./DecorationLine");
 require("./Decoration");
 require("./TripLine");
 require("./TripLineLayout");
+require("./Decoration");
