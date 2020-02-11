@@ -6,3 +6,4 @@ require("./Decoration");
 require("./TripLine");
 require("./TripLineLayout");
 require("./Decoration");
+require("./layouts");
