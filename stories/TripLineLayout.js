@@ -1,14 +1,9 @@
 import React from "react";
 import { storiesOf } from "@storybook/react";
-import { withKnobs, select } from "@storybook/addon-knobs";
-import Content from "../.storybook/components/Content";
+import { withKnobs } from "@storybook/addon-knobs";
 import TripLineLayout from "../components/Decoration/TripLineLayout";
 import Flex from "../components/Flex/Flex";
 import Box from "../components/Flex/Box";
-
-const types = ['departure', 'arrival'];
-const locationTypes = ['absolute', 'connection'];
-const alignments = ["top", "right", "bottom", "left"];
 
 const DepartureLocation = () => (
   <Box px={4} py={2}>
@@ -20,7 +15,7 @@ const DepartureLocation = () => (
 const DepartureInfo = () => (
   <Box px={4} py={2}>
     <Box>Aeroflot SU2513</Box>
-    <Box> 4h 30m  32B  Economy</Box>
+    <Box> 4h 30m 32B Economy</Box>
   </Box>
 );
 
@@ -63,37 +58,21 @@ storiesOf("TripLineLayout", module)
   .addDecorator(withKnobs)
   .add("TripLineLayout", () => {
     return (
-      <Flex
-        justifyContent="center"
-        alignItems="center"
-        width="100%"
-      >
+      <Flex justifyContent="center" alignItems="center" width="100%">
         <Flex flexDirection="column">
-          <TripLineLayout 
-            type="departure"
-            locationType="absolute"
-          >
+          <TripLineLayout type="departure" locationType="absolute">
             <DepartureLocation />
             <DepartureInfo />
           </TripLineLayout>
-          <TripLineLayout 
-            type="arrival"
-            locationType="connection"
-          >
+          <TripLineLayout type="arrival" locationType="connection">
             <ConnectionArrivalLocation />
             <ConnectionArrivalInfo />
           </TripLineLayout>
-          <TripLineLayout 
-            type="departure"
-            locationType="connection"
-          >
+          <TripLineLayout type="departure" locationType="connection">
             <ConnectionDepartureLocation />
             <ConnectionDepartureInfo />
           </TripLineLayout>
-          <TripLineLayout 
-            type="arrival"
-            locationType="absolute"
-          >
+          <TripLineLayout type="arrival" locationType="absolute">
             <ArrivalLocation />
           </TripLineLayout>
         </Flex>

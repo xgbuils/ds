@@ -7,7 +7,7 @@ const DecorationDisk = styled(Decoration)(
     "::after": {
       width: "20px",
       height: "20px",
-      borderRadius: "50%",
+      borderRadius: "50%"
     }
   },
   variant({
@@ -44,7 +44,7 @@ const DecorationDisk = styled(Decoration)(
     variants: {
       disk: {
         "::after": {
-          backgroundColor: "#fc0",
+          backgroundColor: "#fc0"
         }
       },
       circle: {
@@ -54,7 +54,7 @@ const DecorationDisk = styled(Decoration)(
           borderColor: "#fc0",
           backgroundColor: "#fff"
         }
-      },
+      }
     }
   })
 );

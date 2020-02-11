@@ -7,7 +7,7 @@ import Flex from "../components/Flex/Flex";
 import Box from "../components/Flex/Box";
 
 const alignments = ["top", "right", "bottom", "left"];
-const circleTypes = ['disk', 'circle'];
+const circleTypes = ["disk", "circle"];
 
 storiesOf("DecorationDisk", module)
   .addDecorator(withKnobs)
@@ -21,10 +21,7 @@ storiesOf("DecorationDisk", module)
         widht="100%"
         height="100vh"
       >
-        <DecorationDisk 
-          align={align}
-          type={type}
-        >
+        <DecorationDisk align={align} type={type}>
           <Box width={5} height={4}>
             <Content />
           </Box>
@@ -42,10 +39,7 @@ storiesOf("DecorationDisk", module)
         widht="100%"
         height="100vh"
       >
-        <DecorationDisk 
-          align={align}
-          type={type}
-         />
+        <DecorationDisk align={align} type={type} />
       </Flex>
     );
   });

@@ -1,29 +1,50 @@
+import React, { useLayoutEffect, useState, useRef } from "react";
 import styled from "@emotion/styled";
-import { variant, system } from "styled-system";
+import { variant } from "styled-system";
 import Decoration from "./Decoration";
 
-const placeVariants = {
-  full: {
-    position: "50%",
-    size: "100%"
-  },
-  halfStart: {
-    position: "25%",
-    size: "50%"
-  },
-  halfEnd: {
-    position: "75%",
-    size: "50%"
-  }
+export const DASHED_WIDTH = 6;
+export const DASHED_SLOT = 4;
+const REPETITION_WIDTH = DASHED_WIDTH + DASHED_SLOT;
+
+const alignToDirection = isHorizontalLine => {
+  return isHorizontalLine ? "to right" : "to bottom";
 };
 
-const DecorationLine = styled(Decoration)(
-  {
-    "::after": {
-      borderStyle: "solid",
-      borderWidth: "3px",
+const chunkGradient = (start, end, color) => {
+  return `${color} ${start}%, ${color} ${end}%`;
+};
+
+const toColorStops = (isHorizontalLine, size, bgColor) => {
+  const numberOfChunks = Math.ceil(size / REPETITION_WIDTH);
+  const end = 100 / numberOfChunks;
+  const chunkPercentage =
+    (100 * DASHED_WIDTH) / (numberOfChunks * REPETITION_WIDTH);
+  const start = 0.5 * (end - chunkPercentage);
+  const middle = start + chunkPercentage;
+  return [
+    chunkGradient(0, start, "transparent"),
+    chunkGradient(start, middle, bgColor),
+    chunkGradient(middle, end, "transparent")
+  ].join(",");
+};
+
+export const calculateDashedBackground = (
+  color,
+  isHorizontalLine,
+  size,
+  pseudoSelector
+) => {
+  const direction = alignToDirection(isHorizontalLine);
+  const colorStops = toColorStops(isHorizontalLine, size, color);
+  return {
+    [pseudoSelector]: {
+      backgroundImage: `repeating-linear-gradient(${direction},${colorStops})`
     }
-  },
+  };
+};
+
+const StyledDecorationLine = styled(Decoration)(
   variant({
     prop: "align",
     variants: {
@@ -32,6 +53,7 @@ const DecorationLine = styled(Decoration)(
           top: 0,
           left: "50%",
           width: "100%",
+          height: "6px"
         }
       },
       right: {
@@ -39,6 +61,7 @@ const DecorationLine = styled(Decoration)(
           left: "100%",
           top: "50%",
           height: "100%",
+          width: "6px"
         }
       },
       bottom: {
@@ -46,6 +69,7 @@ const DecorationLine = styled(Decoration)(
           top: "100%",
           left: "50%",
           width: "100%",
+          height: "6px"
         }
       },
       left: {
@@ -53,45 +77,44 @@ const DecorationLine = styled(Decoration)(
           left: 0,
           top: "50%",
           height: "100%",
+          width: "6px"
         }
       }
     }
   }),
-  variant({
-    prop: 'color',
-    variants: {
-      yellow: {
-        "::after": {
-          borderColor: '#fc0',
-        }
-      },
-      gray: {
-        "::after": {
-          borderColor: '#aaa',
-        }
-      }
-    } 
-  }),
-  variant({
-    prop: "borderStyle",
-    variants: {
-      solid: {
-        "::after": {
-          borderStyle: "solid"
-        }
-      },
-      dashed: {
-        "::after": {
-          borderStyle: "dashed"
-        }
-      },
-      none: {
-        "::after": {
-          borderStyle: "none"
-        }
-      },
-    }
-  })
+  props => {
+    const color = props.color === "yellow" ? "#fc0" : "#aaa";
+    const isHorizontalLine = ["top", "bottom"].includes(props.align);
+    const size = isHorizontalLine ? props.width : props.height;
+    return props.borderStyle === "dashed"
+      ? calculateDashedBackground(color, isHorizontalLine, size, "::after")
+      : {
+          "::after": {
+            backgroundColor: color
+          }
+        };
+  }
 );
+
+export const withSize = Component => ({ children, ...props }) => {
+  const [size, setSize] = useState({});
+  const ref = useRef(null);
+
+  useLayoutEffect(() => {
+    const { current } = ref;
+    setSize({
+      height: current.clientHeight,
+      width: current.clientWidth
+    });
+  }, [ref, setSize]);
+
+  return (
+    <Component ref={ref} {...props} {...size}>
+      {children}
+    </Component>
+  );
+};
+
+const DecorationLine = withSize(StyledDecorationLine);
 
 export default DecorationLine;

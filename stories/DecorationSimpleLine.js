@@ -6,8 +6,8 @@ import DecorationSimpleLine from "../components/Decoration/DecorationSimpleLine"
 import Flex from "../components/Flex/Flex";
 import Box from "../components/Flex/Box";
 
-const colors = ['gray', 'yellow'];
-const borderStyles = ['solid', 'dashed'];
+const colors = ["gray", "yellow"];
+const borderStyles = ["solid", "dashed"];
 const alignments = ["top", "right", "bottom", "left"];
 
 storiesOf("DecorationSimpleLine", module)
@@ -23,7 +23,7 @@ storiesOf("DecorationSimpleLine", module)
         widht="100%"
         height="100vh"
       >
-        <DecorationSimpleLine 
+        <DecorationSimpleLine
           color={color}
           borderStyle={borderStyle}
           align={align}

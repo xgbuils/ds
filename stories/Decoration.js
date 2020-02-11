@@ -8,9 +8,9 @@ import Flex from "../components/Flex/Flex";
 import Box from "../components/Flex/Box";
 
 const alignments = ["top", "right", "bottom", "left"];
-const circleTypes = ['disk', 'circle'];
-const lineColors = ['yellow', 'gray'];
-const borderStyles = ['solid', 'dashed', 'none']
+const circleTypes = ["disk", "circle"];
+const lineColors = ["yellow", "gray"];
+const borderStyles = ["solid", "dashed", "none"];
 
 storiesOf("DecorationLine & DecorationDisk", module)
   .addDecorator(withKnobs)
@@ -28,11 +28,8 @@ storiesOf("DecorationLine & DecorationDisk", module)
         widht="100%"
         height="100vh"
       >
-        <DecorationDisk 
-          align={align}
-          type={type}
-        >
-          <DecorationLine 
+        <DecorationDisk align={align} type={type}>
+          <DecorationLine
             align={align}
             startColor={startColor}
             startStyle={startStyle}
@@ -62,53 +59,41 @@ storiesOf("DecorationLine & DecorationDisk", module)
         height="100vh"
       >
         <Box flexGrow={1}>
-          <DecorationDisk 
-            align={align}
-            type={type}
-          >
-            <DecorationLine 
+          <DecorationDisk align={align} type={type}>
+            <DecorationLine
               align={align}
               startColor={startColor}
               startStyle={startStyle}
               endColor={endColor}
               endStyle={endStyle}
             >
-              <Box width="100%">
-              </Box>
+              <Box width="100%"></Box>
             </DecorationLine>
           </DecorationDisk>
         </Box>
         <Box flexGrow={1}>
-          <DecorationDisk 
-            align={align}
-            type={type}
-          >
-            <DecorationLine 
+          <DecorationDisk align={align} type={type}>
+            <DecorationLine
               align={align}
               startColor={startColor}
               startStyle={startStyle}
               endColor={endColor}
               endStyle={endStyle}
             >
-              <Box width="100%">
-              </Box>
+              <Box width="100%"></Box>
             </DecorationLine>
           </DecorationDisk>
         </Box>
         <Box flexGrow={1}>
-          <DecorationDisk 
-            align={align}
-            type={type}
-          >
-            <DecorationLine 
+          <DecorationDisk align={align} type={type}>
+            <DecorationLine
               align={align}
               startColor={startColor}
               startStyle={startStyle}
               endColor={endColor}
               endStyle={endStyle}
             >
-              <Box width="100%">
-              </Box>
+              <Box width="100%"></Box>
             </DecorationLine>
           </DecorationDisk>
         </Box>

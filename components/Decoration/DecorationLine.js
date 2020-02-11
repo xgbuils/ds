@@ -1,36 +1,45 @@
 import styled from "@emotion/styled";
-import { variant, system } from "styled-system";
+import { variant } from "styled-system";
 import Decoration from "./Decoration";
+import { calculateDashedBackground, withSize } from "./DecorationSimpleLine";
 
-const placeVariants = {
-  full: {
-    position: "50%",
-    size: "100%"
-  },
-  halfStart: {
-    position: "25%",
-    size: "50%"
-  },
-  halfEnd: {
-    position: "75%",
-    size: "50%"
+const calculateSolidBackground = (color, pseudoSelector) => ({
+  [pseudoSelector]: {
+    backgroundColor: color
   }
+});
+
+const colorStyleVariant = (
+  pseudoSelector,
+  colorProp,
+  borderStyleProp
+) => props => {
+  const borderStyle = props[borderStyleProp];
+  if (borderStyle === "none") {
+    return calculateSolidBackground("transparent", pseudoSelector);
+  }
+  const color = props[colorProp] === "yellow" ? "#fc0" : "#aaa";
+  const isHorizontalLine = ["top", "bottom"].includes(props.align);
+  const size = isHorizontalLine ? props.width : props.height;
+
+  return props[borderStyleProp] === "dashed"
+    ? calculateDashedBackground(
+        color,
+        isHorizontalLine,
+        0.5 * size,
+        pseudoSelector
+      )
+    : calculateSolidBackground(color, pseudoSelector);
 };
 
-const DecorationLine = styled(Decoration)(
+const StyledDecorationLine = styled(Decoration)(
   {
     "::before": {
       content: "''",
       display: "block",
       boxSizing: "border-box",
       position: "absolute",
-      transform: "translate(-50%, -50%)",
-      borderStyle: "solid",
-      borderWidth: "3px",
-    },
-    "::after": {
-      borderStyle: "solid",
-      borderWidth: "3px",
+      transform: "translate(-50%, -50%)"
     }
   },
   variant({
@@ -40,16 +49,14 @@ const DecorationLine = styled(Decoration)(
         "::before": {
           top: 0,
           left: "25%",
-          borderLeftWidth: 0,
-          borderRightWidth: 0,
           width: "50%",
+          height: "6px"
         },
         "::after": {
           top: "0",
           left: "75%",
-          borderLeftWidth: 0,
-          borderRightWidth: 0,
           width: "50%",
+          height: "6px"
         }
       },
       right: {
@@ -57,11 +64,13 @@ const DecorationLine = styled(Decoration)(
           left: "100%",
           top: "25%",
           height: "50%",
+          width: "6px"
         },
         "::after": {
           left: "100%",
           top: "75%",
           height: "50%",
+          width: "6px"
         }
       },
       bottom: {
@@ -69,11 +78,13 @@ const DecorationLine = styled(Decoration)(
           top: "100%",
           left: "25%",
           width: "50%",
+          height: "6px"
         },
         "::after": {
           top: "100%",
           left: "75%",
           width: "50%",
+          height: "6px"
         }
       },
       left: {
@@ -81,85 +92,21 @@ const DecorationLine = styled(Decoration)(
           left: 0,
           top: "25%",
           height: "50%",
+          width: "6px"
         },
         "::after": {
           left: 0,
           top: "75%",
           height: "50%",
+          width: "6px"
         }
       }
     }
   }),
-  variant({
-    prop: 'startColor',
-    variants: {
-      yellow: {
-        "::before": {
-          borderColor: '#fc0',
-        },
-      },
-      gray: {
-        "::before": {
-          borderColor: '#aaa',
-        },
-      }
-    } 
-  }),
-  variant({
-    prop: 'endColor',
-    variants: {
-      yellow: {
-        "::after": {
-          borderColor: '#fc0',
-        }
-      },
-      gray: {
-        "::after": {
-          borderColor: '#aaa',
-        }
-      }
-    } 
-  }),
-  variant({
-    prop: "startStyle",
-    variants: {
-      solid: {
-        "::before": {
-          borderStyle: "solid"
-        }
-      },
-      dashed: {
-        "::before": {
-          borderStyle: "dashed"
-        }
-      },
-      none: {
-        "::before": {
-          borderStyle: "none"
-        }
-      },
-    }
-  }),
-  variant({
-    prop: "endStyle",
-    variants: {
-      solid: {
-        "::after": {
-          borderStyle: "solid"
-        }
-      },
-      dashed: {
-        "::after": {
-          borderStyle: "dashed"
-        }
-      },
-      none: {
-        "::after": {
-          borderStyle: "none"
-        }
-      },
-    }
-  })
+  colorStyleVariant("::before", "startColor", "startStyle"),
+  colorStyleVariant("::after", "endColor", "endStyle")
 );
+
+const DecorationLine = withSize(StyledDecorationLine);
 
 export default DecorationLine;
