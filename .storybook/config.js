@@ -1,4 +1,4 @@
-import React, {Fragment} from "react";
+import React, { Fragment } from "react";
 import { Global, css } from "@emotion/core";
 import theme from "./theme";
 import { configure, addDecorator, addParameters } from "@storybook/react";
@@ -12,16 +12,15 @@ addDecorator(story => (
   <Fragment>
     <Global
       styles={css({
-        'html, body': {
+        "html, body": {
           height: "100%",
           margin: 0
         },
-        '#root': {
+        "#root": {
           height: "100%"
         }
       })}
-    >
-    </Global>
+    ></Global>
     <Provider>{story()}</Provider>
   </Fragment>
 ));

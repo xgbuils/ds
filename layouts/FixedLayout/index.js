@@ -1,3 +1,3 @@
-import FixedLayout from './FixedLayout';
+import FixedLayout from "./FixedLayout";
 
 export default FixedLayout;
