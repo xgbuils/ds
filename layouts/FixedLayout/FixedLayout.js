@@ -2,7 +2,10 @@ import React from "react";
 import styled from "@emotion/styled";
 
 export const StyledFixedLayout = styled("div")({
+  position: "fixed",
+  top: 0,
   height: "100%",
+  width: "100%",
   display: "flex",
   flexDirection: "column"
 });
